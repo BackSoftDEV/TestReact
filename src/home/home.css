@@ -1,0 +1,17 @@
+/* home.css */
+.ant-menu-dark {
+    background-color: #0a192f; /* Màu nền cho sidebar */
+}
+
+.ant-menu-item-selected {
+    background-color: #1d4ed8 !important; /* Màu nền cho mục được chọn */
+    color: #fff !important; /* Màu chữ của mục được chọn */
+}
+
+.ant-menu-item, .ant-menu-submenu-title {
+    color: #cbd5e1 !important; /* Màu chữ */
+}
+
+.ant-menu-item:hover, .ant-menu-submenu-title:hover {
+    color: #fff !important; /* Màu chữ khi hover */
+}
