@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import App from './App'; // Trang đăng nhập
 import Home from './home/home'; // Trang chính sau đăng nhập
 import Accounts from './home/Accounts'; // Import component Accounts
-import Dashboard from "./home/Dashboard";
+import Datdp from "./home/Datdp";
 
 function Main() {
     return (
@@ -13,7 +13,7 @@ function Main() {
                 {/* Các route con nằm trong /home */}
 
                 <Route path="accounts" element={<Accounts />} /> {/* Route cho Accounts */}
-                <Route path="d" element={<Dashboard />} />
+                <Route path="d" element={<Datdp />} />
             </Route>
         </Routes>
     );
