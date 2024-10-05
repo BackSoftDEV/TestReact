@@ -10,7 +10,7 @@ function Accounts() {
         // Gọi API lấy dữ liệu khi component được mount
         getAllAccounts()
             .then((data) => {
-                console.log('Dữ liệu accounts:', data); // Log dữ liệu để kiểm tra
+                console.log('Dữ liệu accouns:', data); // Log dữ liệu để kiểm tra
                 setAccounts(data); // Lưu dữ liệu vào state
             })
             .catch((error) => console.error('Lỗi khi lấy dữ liệu:', error));

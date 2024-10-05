@@ -9,7 +9,7 @@ import {
     MenuUnfoldOutlined,
     PieChartOutlined,
 } from '@ant-design/icons';
-import {Button, Menu} from 'antd';
+import {Button, Menu, Switch} from 'antd';
 import {Outlet, useNavigate, useLocation} from 'react-router-dom'; // Thêm Outlet để hiển thị route con
 import './home.css'; // Import file CSS tùy chỉnh
 
@@ -18,7 +18,9 @@ const items = [{
 }, {
     key: '2', icon: <DesktopOutlined/>, label: 'Thống kê',
 }, {
-    key: '3', icon: <ContainerOutlined/>, label: 'Option 3',
+    key: '3', icon: <ContainerOutlined/>, label: 'Size 1',
+},{
+    key: '4', icon: <ContainerOutlined/>, label: 'Size 2',
 }, {
     key: 'sub1', label: 'Navigation One', icon: <MailOutlined/>, children: [{
         key: '5', label: 'Option 5',
@@ -45,18 +47,24 @@ const items = [{
 
 const Home = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [theme, setTheme] = useState('dark');
     const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
     const location = useLocation(); // Lấy thông tin về đường dẫn hiện tại
     const [selectedKeys, setSelectedKeys] = useState(['2']); // Quản lý trạng thái của mục được chọn
+
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+    const changeTheme = (value) => {
+        setTheme(value ? 'dark' : 'light');
+    };
+
     useEffect(() => {
         // Điều chỉnh mục được chọn dựa trên đường dẫn
         if (location.pathname === '/home/accounts') {
             setSelectedKeys(['1']);
         } else if (location.pathname === '/home/d') {
-            setSelectedKeys(['2']);
+            setSelectedKeys(  ['2']);
         }
     }, [location]);
     useEffect(() => {
@@ -72,33 +80,50 @@ const Home = () => {
             navigate('/home/accounts');
         } else if (e.key === '2') {
             navigate('/home/d');
+        }else if (e.key === '3') {
+            navigate('/home/size');
+        }else if (e.key === '4') {
+            navigate('/home/size2');
         }
         // Bạn có thể thêm điều kiện tương tự cho các mục khác
     };
 
-    return (<div style={{display: 'flex'}}>
-        <div style={{width: 256}}>
-            <Button
-                type="primary"
-                onClick={toggleCollapsed}
-                style={{marginBottom: 16}}
-            >
-                {collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-            </Button>
-            <Menu
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                mode="inline"
-                theme="dark"
-                inlineCollapsed={collapsed}
-                items={items}
-                onClick={onMenuClick} // Thêm sự kiện click vào Menu
-            />
+    return (
+        <div style={{ display: 'flex' }}>
+            <div style={{ width: 256 }}>
+                <Button
+                    type="primary"
+                    onClick={toggleCollapsed}
+                    style={{ marginBottom: 16 }}
+                >
+                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                </Button>
+
+                {/* Nút chuyển đổi giao diện Sáng/Tối */}
+                <Switch
+                    checked={theme === 'dark'}
+                    onChange={changeTheme}
+                    checkedChildren="dark"
+                    unCheckedChildren="light"
+                    style={{ marginBottom: 16 }}
+                />
+
+                <Menu
+                    defaultSelectedKeys={['1']}
+                    defaultOpenKeys={['sub1']}
+                    mode="inline"
+                    theme={theme}  // Áp dụng theme hiện tại
+                    inlineCollapsed={collapsed}
+                    items={items}
+                    onClick={onMenuClick}
+                />
+            </div>
+            <div style={{ flex: 1, padding: '20px' }}>
+                <Outlet /> {/* Hiển thị route con ở đây */}
+            </div>
         </div>
-        <div style={{flex: 1, padding: '20px'}}>
-            <Outlet/> {/* Hiển thị route con ở đây */}
-        </div>
-    </div>);
+    );
 };
+
 
 export default Home;
